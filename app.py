@@ -38,18 +38,36 @@ def home_page():
     )
     st.subheader("Column Descriptions")
 
-    st.write('"CustomerID": Unique float ID (e.g., 2.0 to 64374.0) for customer identification.')
-    st.write('"Age": Customer age in years (18-65), for demographic segmentation.')
-    st.write('"Gender": Binary string (\'Female\', \'Male\') for diversity analysis.')
-    st.write('"Tenure": Subscription duration in months (1-60), indicates loyalty.')
-    st.write('"Usage Frequency": Sessions per period (1-30), measures engagement.')
-    st.write('"Support Calls": Number of support contacts (0-10), signals issues.')
-    st.write('"Payment Delay": Days payments are delayed (0-30), reflects financial behavior.')
-    st.write('"Subscription Type": Plan tier (\'Basic\', \'Standard\', \'Premium\'), shows value perception.')
-    st.write('"Contract Length": Billing period (\'Monthly\', \'Quarterly\', \'Annual\'), affects churn barriers.')
-    st.write('"Total Spend": Cumulative spend (100-999), indicates customer value.')
-    st.write('"Last Interaction": Days since last activity (1-30), tracks dormancy.')
-    st.write('"Churn": Binary target (0.0 = retained, 1.0 = churned) for prediction models.')
+
+
+    data = {
+        "Column": [
+            "CustomerID", "Age", "Gender", "Tenure", "Usage Frequency", 
+            "Support Calls", "Payment Delay", "Subscription Type", 
+            "Contract Length", "Total Spend", "Last Interaction", "Churn"
+        ],
+        "Description": [
+            "Unique float ID (e.g., 2.0 to 64374.0) for customer identification.",
+            "Customer age in years (18-65), for demographic segmentation.",
+            "Binary string ('Female', 'Male') for diversity analysis.",
+            "Subscription duration in months (1-60), indicates loyalty.",
+            "Sessions per period (1-30), measures engagement.",
+            "Number of support contacts (0-10), signals issues.",
+            "Days payments are delayed (0-30), reflects financial behavior.",
+            "Plan tier ('Basic', 'Standard', 'Premium'), shows value perception.",
+            "Billing period ('Monthly', 'Quarterly', 'Annual'), affects churn barriers.",
+            "Cumulative spend (100-999), indicates customer value.",
+            "Days since last activity (1-30), tracks dormancy.",
+            "Binary target (0.0 = retained, 1.0 = churned) for prediction models."
+        ]
+    }
+
+   
+    df = pd.DataFrame(data)
+
+    
+    st.dataframe(df) 
+
     df = pd.read_csv("df_cleaned_for_preprocessing.csv")
     st.write("Sample of DataSet")
     st.write(df.head(20))
@@ -139,7 +157,7 @@ def multivariate_analysis():
         height=800   
     )
  )
-    st.plotly_chart(px.bar(df,x='Subscription Type',y='Tenure',color='Gender',title='Relation between Subscription Type and Tenure for each Gender',text_auto=True))
+    #st.plotly_chart(px.bar(df,x='Subscription Type',y='Tenure',color='Gender',title='Relation between Subscription Type and Tenure for each Gender',text_auto=True))
     #st.plotly_chart(px.bar(df,x='Loyalty_Level',y='Tenure',color='Gender',title='Relation between Loyalty_Level and Tenure for each Gender',text_auto=True))
     #st.plotly_chart(px.bar(df,x='Subscription Type',y='Last Interaction',color='Loyalty_Level',title='Relation between Subscription Type and Last Interaction for each Loyalty_Level',text_auto=True))
 def custom_model_mode():
@@ -347,7 +365,7 @@ def searching_page():
             st.balloons()
             st.snow()
             
-        elif name.lower() == 'team':  
+        elif name.lower() == 'omaa':  
             st.success('''
                 The Customer Churn project team, comprising
                 Eng: Ahmed Rafaat,
@@ -370,7 +388,7 @@ def searching_page():
     
 def main():
     st.set_page_config(page_title="Customer Churn Prediction", layout="wide")
-    st.sidebar.title("📂 Pages")
+    st.sidebar.title("Pages")
     page = st.sidebar.radio("Go to", ["Home", "Analysis","Reporting","Machine Learning","Searching"])
     if page == "Home":
         home_page()

@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from zipfile import ZipFile
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -67,8 +68,14 @@ def home_page():
 
     
     st.dataframe(df) 
+    zip_file_path = "file_streamlit_Nti.zip" 
 
-    df = pd.read_csv("df_cleaned_for_preprocessing.csv")
+
+    with ZipFile(zip_file_path) as z:
+    
+    with z.open("df_cleaned_for_preprocessing.csv") as f:
+        df = pd.read_csv(f)
+
     st.write("Sample of DataSet")
     st.write(df.head(20))
     st.write("Summary Statistics of Data")
@@ -117,7 +124,12 @@ def univariate_analysis():
 
 def bivariate_analysis():
     st.title("Bivariate Analysis")
-    df = pd.read_csv("df_for_analysis.csv")
+    zip_file_path = "file_streamlit_Nti.zip" 
+
+    with ZipFile(zip_file_path) as z:
+    
+        with z.open("df_for_analysis.csv") as f:
+             df = pd.read_csv(f)
     d1 = df.groupby('Subscription Type')['Avg_Spend_per_Month'].sum().sort_values(ascending=False).reset_index()
     st.plotly_chart(px.bar(d1, x='Subscription Type', y='Avg_Spend_per_Month', text_auto=True,title="The Summation of Avg Spend per Month by Subscription Type"))
     d2 = df.groupby('Contract Length')['Engagement_Score'].mean().sort_values(ascending=False).reset_index()
@@ -145,7 +157,12 @@ def bivariate_analysis():
 
 def multivariate_analysis():
     st.title("Multivariate Analysis")
-    df = pd.read_csv("df_for_analysis.csv")
+    zip_file_path = "file_streamlit_Nti.zip" 
+
+    with ZipFile(zip_file_path) as z:
+    
+        with z.open("df_for_analysis.csv") as f:
+             df = pd.read_csv(f)
     st.write("Correlation Matrix")
     df_corr = (df.drop(df.select_dtypes(include='object').columns, axis=1)).corr()
     st.plotly_chart(
@@ -409,3 +426,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

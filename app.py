@@ -73,8 +73,8 @@ def home_page():
 
     with ZipFile(zip_file_path) as z:
     
-    with z.open("df_cleaned_for_preprocessing.csv") as f:
-        df = pd.read_csv(f)
+        with z.open("df_cleaned_for_preprocessing.csv") as f:
+             df = pd.read_csv(f)
 
     st.write("Sample of DataSet")
     st.write(df.head(20))
@@ -426,4 +426,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
